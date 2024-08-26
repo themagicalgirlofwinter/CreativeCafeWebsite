@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+             font-family: 'Varela Round', sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+
+        .gallery-container {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .gallery-item {
+            width: 300px;
+            height: 200px;
+            background: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .loading {
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+
+        #gallery {
+            margin-top: 100px;
+        }
+
+        #gallery h1 {
+    margin-top: 120px;
+    font-size: 2rem;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7), 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="topbar">
+            <div class="title">Creative Cafe</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                    <li><a href="{{ url_for('gallery') }}">About Us</a></li>
+                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="gallery">
+        <h1>Gallery</h1>
+        <div class="gallery-container" id="gallery-container">
+            <p class="loading"></p>
+        </div>
+    </section>
+
+    <footer>
+    <div class="footer-container">
+        <p>&copy; Creative Café. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://github.com/HaChihyeLaOracleDeNova" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/oujosoft" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@HaChihyeLaOracleDeNova" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        const galleryContainer = document.getElementById('gallery-container');
+        const loadingText = document.querySelector('.loading');
+
+        function fetchRandomImage() {
+            fetch('https://foodish-api.com/api')
+                .then(response => response.json())
+                .then(data => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = data.image;
+                    imgElement.alt = 'Random Food Image';
+                    imgElement.onload = () => {
+                        loadingText.style.display = 'none';
+                    };
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    galleryItem.appendChild(imgElement);
+                    galleryContainer.appendChild(galleryItem);
+                })
+                .catch(error => {
+                    console.error('Error fetching image:', error);
+                    loadingText.textContent = 'Failed to load images.';
+                });
+        }
+
+        // Generate the gallery images
+        for (let i = 0; i < 6; i++) {
+            fetchRandomImage();
+        }
+
+    </script>
+</body>
+</html>

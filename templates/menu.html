@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozy Cafe Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+ #menu {
+            padding-top: 80px;
+            text-align: center;
+        }
+
+        /* Additional styles for menu page */
+#menu {
+    padding-top: 80px;
+    text-align: center;
+}
+
+.menu-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.menu-item {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 15px;
+    max-width: 300px;
+    text-align: center;
+}
+
+.menu-item img {
+    width: 100%;
+    border-radius: 8px;
+    height: auto;
+}
+
+.menu-item h3, .menu-item p {
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.menu-item button {
+    background: #2c2c2c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.menu-item button:hover {
+    background: #1a1a1a;
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="topbar">
+            <div class="title">Creative Cafe</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                    <li><a href="{{ url_for('gallery') }}">About Us</a></li>
+                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="menu">
+        <div class="container">
+            <h2>Our Menu</h2>
+            <div class="menu-grid">
+                {% for item in menu_items %}
+                <div class="menu-item">
+                    <img src="{{ item.image }}" alt="{{ item.name }}">
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.description }}</p>
+                    <p><strong>Price:</strong> {{ item.price }}</p>
+                    <form action="{{ url_for('order', item_name=item.name) }}" method="post">
+                        <button type="submit">Order Now</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+        <footer>
+    <div class="footer-container">
+        <p>&copy; Creative Café. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://github.com/HaChihyeLaOracleDeNova" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/oujosoft" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@HaChihyeLaOracleDeNova" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

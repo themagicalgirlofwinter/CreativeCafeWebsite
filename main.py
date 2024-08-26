@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+import random
+import string
 
 app = Flask(__name__)
 
@@ -18,10 +20,6 @@ def home():
 @app.route('/menu')
 def menu():
     return render_template('menu.html', menu_items=menu_items)
-
-
-import random
-import string
 
 
 @app.route('/order/<item_name>', methods=['POST'])
